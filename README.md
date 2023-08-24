@@ -36,7 +36,7 @@ This project is built using a variety of technologies and libraries to provide a
 These technologies work together to create a well-structured and efficient backend that supports various functionalities of the blog platform.
 
 
- 🌐 Endpoints
+ ## Endpoints 🌐
    
 The API provides the following main endpoints:
 
@@ -51,9 +51,9 @@ The API provides the following main endpoints:
 For more details on available endpoints and request/response formats, refer to the API Documentation.
 
 
-Error Handling ❌
+## Error Handling ❌
 The API uses exception handling to provide meaningful error messages in case of failures. Common errors include resource not found, validation errors, and unauthorized access. The GlobalExceptionHandler class centralizes error handling.
 
 
-Authentication and Authorization 🔐
+## Authentication and Authorization 🔐
 The API supports authentication using JWT (JSON Web Tokens) for securing endpoints. Some endpoints may require specific roles for access. Refer to the Security Configuration for more information.
