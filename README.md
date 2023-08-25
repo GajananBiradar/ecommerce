@@ -5,6 +5,7 @@ Welcome to the ecommerce Application REST API! This project is built using Sprin
 ## Table of Contents
 
 - [Getting Started](#getting-started) 🛠️
+- [Technologies Used](#Technologies-Used) 💻 
 - [Endpoints](#endpoints) 🌐
 - [Error Handling](#error-handling) ❌
 - [Authentication and Authorization](#authentication-and-authorization) 🔐
@@ -20,7 +21,7 @@ To run the project locally, follow these steps:
 2. Build and run the project: ./mvnw spring-boot:run
    The application will start, and you can access the endpoints via http://localhost:8080/api.
 
-## Technologies Used
+## Technologies Used 💻
 
 This project is built using a variety of technologies and libraries to provide a robust and efficient backend for the blog platform:
 
