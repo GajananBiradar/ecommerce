@@ -34,56 +34,49 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
-	
+
 	@GetMapping("/")
-	public ResponseEntity<List<UserDto>> getUsers()
-	{
+	public ResponseEntity<List<UserDto>> getUsers() {
 		List<UserDto> allUsers = this.userService.getAllUsers();
-		
-		if(allUsers.size()<=0)
-		{
+
+		if (allUsers.size() <= 0) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
 		logger.info("Collected all the user");
-		return new ResponseEntity<> (allUsers, HttpStatus.OK);
+		return new ResponseEntity<>(allUsers, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/{userId}")
-	public ResponseEntity<UserDto> getSingleUser(@PathVariable("userId") int uid)
-	{
-		 UserDto userById = this.userService.getUserById(uid);
-		
-		return new ResponseEntity<> (userById, HttpStatus.OK);
+	public ResponseEntity<UserDto> getSingleUser(@PathVariable("userId") int uid) {
+		UserDto userById = this.userService.getUserById(uid);
+
+		return new ResponseEntity<>(userById, HttpStatus.OK);
 	}
-	
+
 	@PostMapping("/register/{role}")
-	public ResponseEntity<UserDto> registerUser(@RequestBody UserDto userDto, @PathVariable String role)
-	{
+	public ResponseEntity<UserDto> registerUser(@RequestBody UserDto userDto, @PathVariable String role) {
 		UserDto registeredUser = this.userService.registerNewUser(userDto, role);
-		
-		return new ResponseEntity<UserDto> (registeredUser, HttpStatus.CREATED);
+
+		return new ResponseEntity<UserDto>(registeredUser, HttpStatus.CREATED);
 	}
-	
+
 	@PostMapping("/")
-	public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto userDto)
-	{
+	public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto userDto) {
 		UserDto createUserDto = this.userService.createUser(userDto);
-		
-		return new ResponseEntity<> (createUserDto, HttpStatus.CREATED);
+
+		return new ResponseEntity<>(createUserDto, HttpStatus.CREATED);
 	}
-	
+
 	@PutMapping("/{userId}")
-	public ResponseEntity<UserDto> updateUser(@Valid @RequestBody UserDto userDto, @PathVariable("userId") int uid)
-	{
-		
+	public ResponseEntity<UserDto> updateUser(@Valid @RequestBody UserDto userDto, @PathVariable("userId") int uid) {
+
 		UserDto updatedUser = this.userService.updateUser(userDto, uid);
-		
-		return new ResponseEntity<> (updatedUser, HttpStatus.OK);
+
+		return new ResponseEntity<>(updatedUser, HttpStatus.OK);
 	}
-	
+
 	@DeleteMapping("/{userId}")
-	public ResponseEntity<ApiResponse> deleteUser(@PathVariable("userId") int uid)
-	{
+	public ResponseEntity<ApiResponse> deleteUser(@PathVariable("userId") int uid) {
 		this.userService.deleteUser(uid);
 		return new ResponseEntity(new ApiResponse("User deleted Successfully", true), HttpStatus.OK);
 	}

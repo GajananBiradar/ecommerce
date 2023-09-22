@@ -24,7 +24,7 @@ import com.blog.services.UserService;
 public class UserServiceImpl implements UserService {
 
 	private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
-	
+
 	private static final Object UserDto = null;
 
 	@Autowired
@@ -35,44 +35,32 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-	
+
 	@Autowired
 	private RoleRepo roleRepo;
-	
-	
+
 	@Override
 	public UserDto registerNewUser(UserDto userDto, String roles) {
 		User user = this.modelMapper.map(userDto, User.class);
-		
-		//encode the password
+
+		// encode the password
 		user.setPassword(this.passwordEncoder.encode(user.getPassword()));
-		
-		
+
 		Role role = null;
-		//roles
-		if(roles.equalsIgnoreCase("normal"))
-		{
-			 role = this.roleRepo.findById(AppConstants.NORMAL_USER).get();
-		}
-		else if(roles.equalsIgnoreCase("admin"))
-		{
+		// roles
+		if (roles.equalsIgnoreCase("normal")) {
+			role = this.roleRepo.findById(AppConstants.NORMAL_USER).get();
+		} else if (roles.equalsIgnoreCase("admin")) {
 			role = this.roleRepo.findById(AppConstants.ADMIN_USER).get();
-		}
-		else if(roles.equalsIgnoreCase("seller"))
-		{
+		} else if (roles.equalsIgnoreCase("seller")) {
 			role = this.roleRepo.findById(AppConstants.SELLER_USER).get();
 		}
-		
-		
+
 		user.getRoles().add(role);
-		
 		User newUser = this.userRepo.save(user);
-		
 		return this.modelMapper.map(newUser, UserDto.class);
 	}
 
-	
-	
 	@Override
 	public UserDto createUser(UserDto userdto) {
 		User user = this.dtoToUser(userdto);
@@ -91,13 +79,11 @@ public class UserServiceImpl implements UserService {
 		user.setAbout(userdto.getAbout());
 
 		User updatedUser = this.userRepo.save(user);
-
 		return this.userToDto(updatedUser);
 	}
 
 	@Override
 	public UserDto getUserById(Integer userId) {
-
 		User user = this.userRepo.findById(userId)
 				.orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
 
@@ -108,10 +94,10 @@ public class UserServiceImpl implements UserService {
 	public List<UserDto> getAllUsers() {
 		List<User> users = this.userRepo.findAll();
 		logger.info("Fetched all the users in List");
-		
+
 		List<UserDto> userDtos = users.stream().map(user -> this.userToDto(user)).collect(Collectors.toList());
 		logger.info("Converted user to userDto");
-		
+
 		return userDtos;
 	}
 
@@ -122,9 +108,6 @@ public class UserServiceImpl implements UserService {
 
 		this.userRepo.delete(user);
 	}
-	
-	
-	
 
 	public User dtoToUser(UserDto userDto) {
 		User user = this.modelMapper.map(userDto, User.class);
@@ -143,9 +126,4 @@ public class UserServiceImpl implements UserService {
 		return userDto;
 	}
 
-
-
-	
-
-	
 }

@@ -34,50 +34,43 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class User implements UserDetails{
+public class User implements UserDetails {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="user_id")
+	@Column(name = "user_id")
 	private int id;
-	
-	@Column(name="user_name", nullable = false, length=100)
+
+	@Column(name = "user_name", nullable = false, length = 100)
 	@NotNull(message = "Name cannot be null")
 	private String name;
-	
-	@Column(name="user_email")
+
+	@Column(name = "user_email")
 	@NotNull(message = "Email cannot be null")
 	private String email;
-	
+
 	@NotNull(message = "Password cannot be null")
 	private String password;
 	private String about;
-	
+
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
 	private List<Address> address = new ArrayList<>();
-	
-	
+
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
 	private List<Product> products = new ArrayList<>();
 
-	
-	@OneToMany(mappedBy = "user",cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
 	private List<Cart> cart = new ArrayList<>();
-	
-	
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinTable(name= "user_role", 
-	joinColumns = @JoinColumn(name="user", referencedColumnName = "user_id"),
-	inverseJoinColumns = @JoinColumn(name="role", referencedColumnName = "role_id"))
-	private Set<Role> roles= new HashSet<>();
 
-	
-	
-	
-	
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user", referencedColumnName = "user_id"), 
+	inverseJoinColumns = @JoinColumn(name = "role", referencedColumnName = "role_id"))
+	private Set<Role> roles = new HashSet<>();
+
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		List<SimpleGrantedAuthority> autories = this.roles.stream().map((role)-> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
+		List<SimpleGrantedAuthority> autories = this.roles.stream()
+				.map((role) -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
 		return autories;
 	}
 
@@ -105,6 +98,5 @@ public class User implements UserDetails{
 	public boolean isEnabled() {
 		return true;
 	}
-	
-	
+
 }

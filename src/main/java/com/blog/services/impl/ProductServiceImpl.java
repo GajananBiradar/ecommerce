@@ -77,6 +77,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
+	@PreAuthorize("hasRole('SELLER') or hasRole('ADMIN')")
 	public ProductDto addProduct(ProductDto productDto, int sellerId) {
 		User seller = this.userRepo.findById(sellerId)
 				.orElseThrow(() -> new ResourceNotFoundException("Seller", "id", sellerId));

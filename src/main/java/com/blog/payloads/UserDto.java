@@ -45,6 +45,5 @@ public class UserDto {
 	private List<ProductDto> products = new ArrayList<>();
 	
 	private List<CartDto> cart = new ArrayList<>();
-	
-	
+		
 }

@@ -16,10 +16,10 @@ import com.blog.repositories.RoleRepo;
 
 @SpringBootApplication
 public class BlogAppApisApplication implements CommandLineRunner {
-	
+
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-	
+
 	@Autowired
 	private RoleRepo roleRepo;
 
@@ -28,37 +28,36 @@ public class BlogAppApisApplication implements CommandLineRunner {
 	}
 
 	@Bean
-	public ModelMapper modelMapper()
-	{
+	public ModelMapper modelMapper() {
 		return new ModelMapper();
 	}
 
 	@Override
 	public void run(String... args) throws Exception {
-		//System.out.println(this.passwordEncoder.encode("kri"));
-		
-		
+		// System.out.println(this.passwordEncoder.encode("kri"));
+
 		try {
 			Role role = new Role();
 			role.setId(AppConstants.ADMIN_USER);
 			role.setName("ROLE_ADMIN");
-			
+
 			Role role1 = new Role();
 			role1.setId(AppConstants.NORMAL_USER);
 			role1.setName("ROLE_NORMAL");
-			
+
 			Role role2 = new Role();
 			role2.setId(AppConstants.SELLER_USER);
 			role2.setName("ROLE_SELLER");
-			
+
 			List<Role> roles = List.of(role, role1, role2);
 			List<Role> result = this.roleRepo.saveAll(roles);
-			
-			result.forEach(r -> {System.out.println(r.getName());});
-			
+
+			result.forEach(r -> {System.out.println(r.getName());
+			});
+
 		} catch (Exception e) {
 			// TODO: handle exaception
 		}
-		
+
 	}
 }

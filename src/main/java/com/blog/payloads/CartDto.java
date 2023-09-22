@@ -23,5 +23,4 @@ public class CartDto {
 	
 	private int userId;
 	
-	
 }
